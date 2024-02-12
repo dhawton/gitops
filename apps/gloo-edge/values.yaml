@@ -6,5 +6,5 @@ gloo:
       service:
         extraAnnotations:
           service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
-          service.beta.kubernetes.io/do-loadbalancer-hostname: cluster2.lb.addysnip.link
+          service.beta.kubernetes.io/do-loadbalancer-hostname: lb.ca.hawton.cloud
           service.beta.kubernetes.io/do-loadbalancer-tls-passthrough: "true"
