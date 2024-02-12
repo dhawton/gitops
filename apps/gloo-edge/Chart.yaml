@@ -1,0 +1,12 @@
+apiVersion: v2
+name: gloo-edge
+description: Gloo Edge
+
+type: application
+version: 1.0.0
+appVersion: 1.0.0
+
+dependencies:
+- name: gloo
+  version: 1.16.3
+  repository: https://storage.googleapis.com/solo-public-helm
