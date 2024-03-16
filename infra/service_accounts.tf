@@ -34,7 +34,7 @@ resource "kubernetes_secret_v1" "addysnip-gcpsm-secret" {
     namespace = kubernetes_namespace.external_secrets.metadata[0].name
   }
 
-  data = {
+  binary_data = {
     secret-access-credentials = google_service_account_key.addysnip-service-account-key.private_key
   }
 }
@@ -45,7 +45,7 @@ resource "kubernetes_secret_v1" "adhp-gcpsm-secret" {
     namespace = kubernetes_namespace.external_secrets.metadata[0].name
   }
 
-  data = {
+  binary_data = {
     secret-access-credentials = google_service_account_key.adhp-service-account-key.private_key
   }
 }
