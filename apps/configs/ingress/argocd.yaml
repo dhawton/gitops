@@ -1,0 +1,51 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-tls
+  namespace: argocd
+spec:
+  secretName: argocd-tls
+  dnsNames:
+  - argo.ca.hawton.cloud
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+    group: cert-manager.io
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: argocd-vs
+  namespace: gloo-system
+spec:
+  sslConfig:
+    secretRef:
+      name: argocd-tls
+      namespace: argocd
+  virtualHost:
+    domains:
+    - argo.ca.hawton.cloud
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          upstream:
+            name: argocd-argo-cd-argocd-server-80
+            namespace: gloo-system
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: argocd-http-vs
+  namespace: gloo-system
+spec:
+  virtualHost:
+    domains:
+    - argo.ca.hawton.cloud
+    routes:
+    - matchers:
+      - prefix: /
+      redirectAction:
+        httpsRedirect: true
+        hostRedirect: argo.ca.hawton.cloud

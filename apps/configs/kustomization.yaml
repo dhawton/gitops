@@ -6,3 +6,4 @@ resources:
 - base/cert-manager-ClusterIssuer.yaml
 - base/cert-manager-external-secret.yaml
 - base/external-secret-clustersecretstore.yaml
+- ingress/argocd.yaml
