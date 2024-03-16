@@ -48,10 +48,4 @@ argo-cd:
     extraArgs:
     - --insecure # We will do TLS termination at Gloo Edge
     ingress:
-      enabled: true
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt
-        kubernetes.io/tls-acme: "true"
-      hostname: argo.ca.hawton.cloud
-      tls: true
-
+      enabled: false
