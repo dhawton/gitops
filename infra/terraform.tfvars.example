@@ -1,1 +1,6 @@
 do_token = ""
+cluster_name = ""
+cluster_region = ""
+cluster_nodepool_name = ""
+cluster_nodepool_min_nodes = 2
+cluster_nodepool_max_nodes = 5

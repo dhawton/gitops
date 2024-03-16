@@ -3,6 +3,12 @@ terraform {
         digitalocean = {
             source = "digitalocean/digitalocean"
         }
+        kubernetes = {
+            source = "hashicorp/kubernetes"
+        }
+        google = {
+            source = "hashicorp/google"
+        }
     }
     backend "s3" {
         endpoint                    = "sfo3.digitaloceanspaces.com"
@@ -14,21 +20,17 @@ terraform {
     }
 }
 
-variable "do_token" {}
-
 provider "digitalocean" {
     token = var.do_token
 }
 
-resource "digitalocean_kubernetes_cluster" "tor2" {
-    name   = "tor2"
-    region  = "tor1"
-    version = "1.29.1-do.0"
-    node_pool {
-        name       = "default"
-        size       = "s-2vcpu-4gb"
-        auto_scale = true
-        min_nodes = 1
-        max_nodes = 5
-    }
+provider "kubernetes" {
+    host             = digitalocean_kubernetes_cluster.cluster.endpoint
+    token            = digitalocean_kubernetes_cluster.cluster.kube_config[0].token
+    cluster_ca_certificate = base64decode(digitalocean_kubernetes_cluster.cluster.kube_config[0].cluster_ca_certificate)
+}
+
+provider "google" {
+    project = "adhp-386716"
+    region  = "us-central1"
 }
